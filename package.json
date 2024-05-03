@@ -1,0 +1,15 @@
+{
+  "name": "nuevoproyecto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    ".env": "node .env ",
+    ".gitignore": ".gitignore",
+    "app.js": "app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
