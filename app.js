@@ -2,52 +2,30 @@ import express from "express";
 import cors from "cors";
 import productRouter from "./routes/product.route.js";
 import db from "./database/db.js";
-// import db from "./database/db.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// bd conection
+// Conexión a la base de datos
 (async () => {
   try {
     await db.authenticate();
-    db.sync(); // crea las tablas en la db ( si no existen )
-    console.log("Connection has been established successfully.");
+    db.sync(); // Crea las tablas en la base de datos si no existen
+    console.log("La conexión a la base de datos se ha establecido correctamente.");
   } catch (error) {
-    console.error("Unable to connect to the database:", error.message);
+    console.error("No se pudo conectar a la base de datos:", error.message);
   }
 })();
 
-// midellewares
-app.use(express.json()); // envio-recepción de información en formato tipo json
-app.use(cors()); // consumo de API desde otros puertos diferentes al PORT
-app.use(express.static("public")); // contenedor de archivos estaticos - carpeta publica
-// http://localhost:3000
+// Middlewares
+app.use(express.json()); // Permite el envío y recepción de información en formato JSON
+app.use(cors()); // Permite el consumo de la API desde otros puertos diferentes al PORT
+app.use(express.static("public")); // Contenedor de archivos estáticos - carpeta pública
 
-// endpoints
+// Rutas
+app.use("/products", productRouter); // Usar las rutas definidas en productRouter para gestionar los productos
 
-// forma larga
-// http://localhost:3000/products
-// app.get("/products", (req, res) => {
-//   // res.send("Hello World!");
-//   res.status(200).json({
-//     success: true,
-//     data: [
-//       {
-//         subject: "programación v",
-//         description: "this is my first api",
-//         hour: "20:00pm",
-//         semester: "7",
-//         date: new Date().toDateString(),
-//       },
-//     ],
-//   });
-// });
-
-// forma corta
-app.use("/products", productRouter);
-
-// levantar aplicación
+// Iniciar el servidor
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`La aplicación está escuchando en el puerto ${port}`);
 });
